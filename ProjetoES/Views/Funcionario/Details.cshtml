@@ -1,0 +1,112 @@
+﻿@model ProjetoES.Models.Funcionario
+
+<h3>
+    Detalhes
+</h3>
+
+<div>
+    @Html.ActionLink("Voltar", "Index")
+</div>
+
+<br />
+
+<table class="table table-bordered table-condensed table-hover table-responsive table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cpf)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataCadastro)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataContratacao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Matricula)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cargo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Setor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Regional)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CodigoFuncionario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Endereco)
+        </th>
+        <th></th>
+    </tr>
+
+    <tr>
+        <td>
+            @Html.DisplayFor(Model => Model.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(Model => Model.Cpf)
+        </td>
+        <td>
+            @Html.DisplayFor(Model => Model.DataCadastro)
+        </td>
+        <td>
+            @Html.DisplayFor(Model => Model.DataContratacao)
+        </td>
+        <td>
+            @Html.DisplayFor(Model => Model.Matricula)
+        </td>
+        <td>
+            @Html.DisplayFor(Model => Model.Cargo)
+        </td>
+        <td>
+            @Html.DisplayFor(Model => Model.Setor)
+        </td>
+        <td>
+            @Html.DisplayFor(Model => Model.Regional)
+        </td>
+        <td>
+            @Html.DisplayFor(Model => Model.Email)
+        </td>
+        <td>
+            @if (Model.Status == 1)
+            {
+                <span>
+                    ATIVO
+                </span>
+            }
+            else
+            {
+                <span>
+                    INATIVO
+                </span>
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(Model => Model.CodigoFuncionario)
+        </td>
+        <td>
+            @string.Concat(Model.Endereco.Logradouro,
+                        " ", Model.Endereco.Numero,
+                        " ", Model.Endereco.Complemento,
+                        " - ", Model.Endereco.Cidade.Nome,
+                        " - ", Model.Endereco.Cidade.Estado.Nome)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
+            @Html.ActionLink("Trocar Status", "TrocarStatus", new { id = Model.Id, status = Model.Status })
+        </td>
+    </tr>
+
+</table>

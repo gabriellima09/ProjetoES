@@ -1,0 +1,17 @@
+﻿
+
+<h1>Funcionários</h1>
+
+<hr />
+
+<div class="container">
+    <div class="form-group">
+        <div class="col-md-2 col-md-10">
+            @Html.ActionLink("Cadastrar", "Create", "Funcionario", new { @class = "btn btn-primary" })
+        </div>
+    </div>
+</div>
+
+<hr />
+
+@Html.Action("PvFuncionarios")
