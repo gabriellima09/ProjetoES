@@ -35,7 +35,7 @@ namespace ProjetoES.App_Start
 
             try
             {
-                using (SqlConnection myConn = new SqlConnection(@"Data Source=(localDb)\MSSQLLocalDb;Integrated security=true;database=master"))
+                using (SqlConnection myConn = new SqlConnection(DbUtil.ConnectionString_Master))
                 {
                     using (SqlCommand myCommand = new SqlCommand(sb.ToString(), myConn))
                     {

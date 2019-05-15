@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -9,6 +10,7 @@ namespace ProjetoES.DAO
     public class DbUtil
     {
         public static string ConnectionString => _SqlConnectionStringBuilder.ConnectionString;
+        public static string ConnectionString_Master => _SqlConnectionStringBuilder_Master.ConnectionString;
         public static string DatabaseName => _DatabaseNameBuilder;
         public static string Path => _PathBuilder;
         public static string DataServerName => _ServerNameBuilder;
@@ -17,7 +19,7 @@ namespace ProjetoES.DAO
         {
             get
             {
-                return "projetoES";
+                return ConfigurationManager.AppSettings["DatabaseName"];
             }
         }
 
@@ -25,7 +27,7 @@ namespace ProjetoES.DAO
         {
             get
             {
-                return @"C:\Users\gabriel.gomes\";
+                return ConfigurationManager.AppSettings["DatabasePath"];
             }
         }
 
@@ -33,7 +35,7 @@ namespace ProjetoES.DAO
         {
             get
             {
-                return @"(localDb)\MSSQLLocalDb";
+                return ConfigurationManager.AppSettings["ServerName"];
             }
         }
         
@@ -45,6 +47,19 @@ namespace ProjetoES.DAO
                 {
                     DataSource = _ServerNameBuilder,
                     InitialCatalog = _DatabaseNameBuilder,
+                    IntegratedSecurity = true
+                };
+            }
+        }
+
+        private static SqlConnectionStringBuilder _SqlConnectionStringBuilder_Master
+        {
+            get
+            {
+                return new SqlConnectionStringBuilder
+                {
+                    DataSource = _ServerNameBuilder,
+                    InitialCatalog = ConfigurationManager.AppSettings["DatabaseName_Master"],
                     IntegratedSecurity = true
                 };
             }
