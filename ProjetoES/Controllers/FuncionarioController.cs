@@ -33,11 +33,10 @@ namespace ProjetoES.Controllers
                 Fachada.Cadastrar(funcionario);
 
                 return View("Index");
-            }
-            catch (Exception ex)
-            {
+            }catch(Exception error) {
                 return View("Error");
             }
+            
         }
 
         public ActionResult Edit(int id)

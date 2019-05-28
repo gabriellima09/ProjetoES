@@ -5,10 +5,74 @@
     <meta name="viewport" content="width=device-width" />
     <title>Erro</title>
 </head>
+
+<style>
+   body {
+  display: flex;
+  align-items: center;
+  background: #E3F2FD;
+  min-width: 275px;
+  height: 100vh;
+  margin: 0 10vw;
+  overflow: hidden;
+  color: #138FF2;
+}
+
+.wrapper {
+  flex-grow: 2;
+  width: 40vw;
+  max-width: 500px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 6em;
+  font-weight: 100;
+}
+
+p {
+  width: 95%;
+  font-size: 1.5em;
+  line-height: 1.4;
+}
+
+.buttons {
+  white-space: nowrap;
+  display: inline-block;
+}
+
+span {
+  display: block;
+  text-transform: uppercase;
+  color: #B9DDFB;
+  letter-spacing: 1.5px;
+  text-align: center;
+}
+
+  &:before {
+    content: '';
+    background: #138FF2;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: -100%;
+    left: 0;
+    transition: .3s;
+    z-index: -1;
+  }
+}
+
+
+</style>
 <body>
-    <hgroup>
-        <h1>Erro.</h1>
-        <h2>Ocorreu um erro ao processar sua solicitação.</h2>
-    </hgroup>
+
+    <div class="wrapper">
+        <h1>Hmm.</h1>
+        <br />
+        <br />
+        <p>Parece que um erro ocorreu durante sua solicitação.</p>
+        <br />
+        <u><strong><p>@Html.ActionLink("Voltar", "Index", "Home")</p></strong></u>
+    </div>
 </body>
 </html>
