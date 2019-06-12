@@ -133,6 +133,7 @@
     <Compile Include="DAO\DbUtil.cs" />
     <Compile Include="DAO\EnderecoDAO.cs" />
     <Compile Include="DAO\FuncionarioDAO.cs" />
+    <Compile Include="DAO\IDAO.cs" />
     <Compile Include="Facade\Fachada.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -149,14 +150,16 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Diagramas\Classe CRUD Cliente.png" />
+    <Content Include="Diagramas\Diagrama de Sequencia.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Diagramas\Atividade_ES_III v1.1.asta" />
     <Content Include="Diagramas\Classe CRUD Cliente 0.3.asta" />
+    <Content Include="Diagramas\Diagrama de Sequencia v0.1.asta" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
