@@ -10,6 +10,8 @@ namespace ProjetoES.Controllers
 {
     public class FuncionarioController : Controller
     {
+        private Fachada fachada = new Fachada();
+
         public ActionResult Index()
         {
             return View();
@@ -17,7 +19,8 @@ namespace ProjetoES.Controllers
 
         public ActionResult PvFuncionarios()
         {
-            return PartialView(Fachada.Consultar());
+            ConsultarCommand consultar = new ConsultarCommand();
+            return PartialView(consultar.executar());
         }
 
         public ActionResult Create()
@@ -30,7 +33,8 @@ namespace ProjetoES.Controllers
         {
             try
             {
-                Fachada.Cadastrar(funcionario);
+                SalvarCommand salvar = new SalvarCommand();
+                salvar.executar(funcionario);
 
                 return View("Index");
             }catch(Exception error) {
@@ -41,7 +45,9 @@ namespace ProjetoES.Controllers
 
         public ActionResult Edit(int id)
         {
-            return View(Fachada.ConsultarPorId(id));
+            ConsultarCommand consultar = new ConsultarCommand();
+
+            return View(consultar.executar(id));
         }
 
         [HttpPost]
@@ -49,7 +55,8 @@ namespace ProjetoES.Controllers
         {
             try
             {
-                Fachada.Alterar(funcionario);
+                AlterarCommand alterar = new AlterarCommand();
+                alterar.executar(funcionario);
 
                 return View("Index");
             }
@@ -63,7 +70,9 @@ namespace ProjetoES.Controllers
         {
             try
             {
-                return View(Fachada.ConsultarPorId(id));
+                ConsultarCommand consultar = new ConsultarCommand();
+
+                return View(consultar.executar(id));
             }
             catch (Exception)
             {
@@ -75,14 +84,9 @@ namespace ProjetoES.Controllers
         {
             try
             {
-                if (status == 1)
-                {
-                    Fachada.InativarFuncionario(id);
-                }
-                else
-                {
-                    Fachada.AtivarFuncionario(id);
-                }
+                TrocarStatusCommand trocarStatus = new TrocarStatusCommand();
+
+                trocarStatus.executar(id, status);
 
                 return RedirectToAction("Details", new { id });
             }

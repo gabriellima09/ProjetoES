@@ -138,10 +138,20 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AlterarCommand.cs" />
     <Compile Include="Models\Cidade.cs" />
+    <Compile Include="Models\ConsultarCommand.cs" />
     <Compile Include="Models\Endereco.cs" />
     <Compile Include="Models\Estado.cs" />
     <Compile Include="Models\Funcionario.cs" />
+    <Compile Include="Models\ICommand.cs" />
+    <Compile Include="Models\IStrategy.cs" />
+    <Compile Include="Models\SalvarCommand.cs" />
+    <Compile Include="Models\TrocarStatusCommand.cs" />
+    <Compile Include="Models\ValidarCpf.cs" />
+    <Compile Include="Models\ValidarData.cs" />
+    <Compile Include="Models\ValidarEmail.cs" />
+    <Compile Include="Models\ValidarPropriedadeVazia.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\Validador.cs" />
   </ItemGroup>
