@@ -1,77 +1,79 @@
 ﻿using ProjetoES.DAO;
 using ProjetoES.Models;
+using ProjetoES.Strategy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace ProjetoES.Facade
 {
-    public class Fachada
+    public class Fachada : IFachada<Funcionario>
     {
         private Dictionary<string, List<IStrategy>> regra_validacao = new Dictionary<string, List<IStrategy>>();
 
         public Fachada()
         {
-            List<IStrategy> lista_validacao = new List<IStrategy>();
-            lista_validacao.Add(new ValidarCpf());
-            lista_validacao.Add(new ValidarData());
-            lista_validacao.Add(new ValidarEmail());
-            lista_validacao.Add(new ValidarPropriedadeVazia());
+            List<IStrategy> lista_validacao = new List<IStrategy>
+            {
+                new ValidarCpf(),
+                new ValidarData(),
+                new ValidarEmail(),
+                new ValidarFuncionario()
+            };
 
             regra_validacao.Add("funcionario", lista_validacao);
         }
 
-        public void Cadastrar(Funcionario funcionario)
+        public void Cadastrar(Funcionario entidade)
         {
-            var lista_objetos_validacao = regra_validacao["funcionario"];
+            List<IStrategy> lista_objetos_validacao = regra_validacao["funcionario"];
 
             for(int i = 0; i < lista_objetos_validacao.Count; i++)
             {
-                lista_objetos_validacao[i].processar(funcionario);
+                lista_objetos_validacao[i].Processar(entidade);
             }
 
-            var enderecoDao = new EnderecoDAO();
-            funcionario.IdEndereco = enderecoDao.Salvar(funcionario.Endereco);
+            EnderecoDAO enderecoDao = new EnderecoDAO();
+            entidade.IdEndereco = enderecoDao.Salvar(entidade.Endereco);
 
-            funcionario.DataCadastro = DateTime.Now;
-            funcionario.Status = 1;
+            entidade.DataCadastro = DateTime.Now;
+            entidade.Status = 1;
 
-            var funcionarioDao = new FuncionarioDAO();
-            funcionarioDao.Salvar(funcionario);
+            FuncionarioDAO funcionarioDao = new FuncionarioDAO();
+            funcionarioDao.Salvar(entidade);
         }
 
         public void AtivarFuncionario(int id)
         {
-            var funcionarioDAO = new FuncionarioDAO();
+            FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
             funcionarioDAO.AtivarFuncionario(id);
         }
 
         public void InativarFuncionario(int id)
         {
-            var funcionarioDAO = new FuncionarioDAO();
+            FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
             funcionarioDAO.InativarFuncionario(id);
         }
 
-        public void Alterar(Funcionario funcionario)
+        public void Alterar(Funcionario entidade)
         {
-            var lista_objetos_validacao = regra_validacao["funcionario"];
+            List<IStrategy> lista_objetos_validacao = regra_validacao["funcionario"];
 
             for (int i = 0; i < lista_objetos_validacao.Count; i++)
             {
-                lista_objetos_validacao[i].processar(funcionario);
+                lista_objetos_validacao[i].Processar(entidade);
             }
-            
-            var enderecoDao = new EnderecoDAO();
-            enderecoDao.Alterar(funcionario.Endereco);
 
-            var funcionarioDao = new FuncionarioDAO();
-            funcionarioDao.Salvar(funcionario);
+            EnderecoDAO enderecoDao = new EnderecoDAO();
+            enderecoDao.Alterar(entidade.Endereco);
+
+            FuncionarioDAO funcionarioDao = new FuncionarioDAO();
+            funcionarioDao.Salvar(entidade);
         }
 
-        public List<Funcionario> Consultar()
+        public IList<Funcionario> Consultar()
         {
-            return new FuncionarioDAO().Consultar();
+            return new FuncionarioDAO().Consultar().ToList();
         }
 
         public Funcionario ConsultarPorId(int id)

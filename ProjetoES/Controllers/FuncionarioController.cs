@@ -1,17 +1,12 @@
-﻿using ProjetoES.Facade;
+﻿using ProjetoES.Command;
 using ProjetoES.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ProjetoES.Controllers
 {
     public class FuncionarioController : Controller
     {
-        private Fachada fachada = new Fachada();
-
         public ActionResult Index()
         {
             return View();
@@ -19,8 +14,7 @@ namespace ProjetoES.Controllers
 
         public ActionResult PvFuncionarios()
         {
-            ConsultarCommand consultar = new ConsultarCommand();
-            return PartialView(consultar.executar());
+            return PartialView(new ConsultarCommand().Executar());
         }
 
         public ActionResult Create()
@@ -33,21 +27,20 @@ namespace ProjetoES.Controllers
         {
             try
             {
-                SalvarCommand salvar = new SalvarCommand();
-                salvar.executar(funcionario);
+                new SalvarCommand().Executar(funcionario);
 
                 return View("Index");
-            }catch(Exception error) {
+            }
+            catch (Exception error)
+            {
                 return View("Error");
             }
-            
+
         }
 
         public ActionResult Edit(int id)
         {
-            ConsultarCommand consultar = new ConsultarCommand();
-
-            return View(consultar.executar(id));
+            return View(new ConsultarCommand().Executar(id));
         }
 
         [HttpPost]
@@ -55,8 +48,7 @@ namespace ProjetoES.Controllers
         {
             try
             {
-                AlterarCommand alterar = new AlterarCommand();
-                alterar.executar(funcionario);
+                new AlterarCommand().Executar(funcionario);
 
                 return View("Index");
             }
@@ -70,9 +62,7 @@ namespace ProjetoES.Controllers
         {
             try
             {
-                ConsultarCommand consultar = new ConsultarCommand();
-
-                return View(consultar.executar(id));
+                return View(new ConsultarCommand().Executar(id));
             }
             catch (Exception)
             {
@@ -84,9 +74,7 @@ namespace ProjetoES.Controllers
         {
             try
             {
-                TrocarStatusCommand trocarStatus = new TrocarStatusCommand();
-
-                trocarStatus.executar(id, status);
+                new TrocarStatusCommand().Executar(id, status);
 
                 return RedirectToAction("Details", new { id });
             }

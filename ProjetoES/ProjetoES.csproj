@@ -127,6 +127,7 @@
     <Compile Include="App_Start\DatabaseConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Command\AbstractCommand.cs" />
     <Compile Include="Controllers\FuncionarioController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DAO\DbContext.cs" />
@@ -135,23 +136,24 @@
     <Compile Include="DAO\FuncionarioDAO.cs" />
     <Compile Include="DAO\IDAO.cs" />
     <Compile Include="Facade\Fachada.cs" />
+    <Compile Include="Facade\IFachada.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AlterarCommand.cs" />
+    <Compile Include="Command\AlterarCommand.cs" />
     <Compile Include="Models\Cidade.cs" />
-    <Compile Include="Models\ConsultarCommand.cs" />
+    <Compile Include="Command\ConsultarCommand.cs" />
     <Compile Include="Models\Endereco.cs" />
     <Compile Include="Models\Estado.cs" />
     <Compile Include="Models\Funcionario.cs" />
-    <Compile Include="Models\ICommand.cs" />
-    <Compile Include="Models\IStrategy.cs" />
-    <Compile Include="Models\SalvarCommand.cs" />
-    <Compile Include="Models\TrocarStatusCommand.cs" />
-    <Compile Include="Models\ValidarCpf.cs" />
-    <Compile Include="Models\ValidarData.cs" />
-    <Compile Include="Models\ValidarEmail.cs" />
-    <Compile Include="Models\ValidarPropriedadeVazia.cs" />
+    <Compile Include="Command\ICommand.cs" />
+    <Compile Include="Strategy\IStrategy.cs" />
+    <Compile Include="Command\SalvarCommand.cs" />
+    <Compile Include="Command\TrocarStatusCommand.cs" />
+    <Compile Include="Strategy\ValidarCpf.cs" />
+    <Compile Include="Strategy\ValidarData.cs" />
+    <Compile Include="Strategy\ValidarEmail.cs" />
+    <Compile Include="Strategy\ValidarFuncionario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\Validador.cs" />
   </ItemGroup>

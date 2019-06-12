@@ -1,14 +1,11 @@
-﻿using ProjetoES.Util;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using ProjetoES.Models;
+using ProjetoES.Util;
 
-namespace ProjetoES.Models
+namespace ProjetoES.Strategy
 {
-    public class ValidarPropriedadeVazia : IStrategy
+    public class ValidarFuncionario : IStrategy
     {
-        public bool processar(Funcionario funcionario)
+        public bool Processar(Funcionario funcionario)
         {
             return Validador.ValidarPropriedadeVazia(funcionario.Nome) 
                 && Validador.ValidarPropriedadeVazia(funcionario.Matricula)

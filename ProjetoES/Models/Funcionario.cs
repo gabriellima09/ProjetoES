@@ -1,9 +1,5 @@
-﻿using ProjetoES.Util;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace ProjetoES.Models
 {
@@ -45,19 +41,5 @@ namespace ProjetoES.Models
 
         public int IdEndereco { get; set; }
         public Endereco Endereco { get; set; }
-
-
-        public bool Validar()
-        {
-            return Validador.ValidarPropriedadeVazia(Nome)
-                && Validador.ValidarCPF(Cpf)
-                && Validador.ValidarEmail(Email)
-                && Validador.ValidarData(DataContratacao)
-                && Validador.ValidarPropriedadeVazia(Matricula)
-                && Validador.ValidarPropriedadeVazia(Cargo)
-                && Validador.ValidarPropriedadeVazia(Setor)
-                && Validador.ValidarPropriedadeVazia(Regional)
-                && Endereco.Validar();
-        }
     }
 }
