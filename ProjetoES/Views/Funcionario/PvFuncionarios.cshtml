@@ -4,7 +4,7 @@
     Layout = null;
 }
 
-<table class="table table-bordered table-condensed table-hover table-responsive table-striped">
+<table class="table table-bordered table-condensed table-hover table-responsive table-striped" style="text-align:center">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Nome)
@@ -17,21 +17,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DataCadastro)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DataContratacao)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Matricula)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Cargo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Setor)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Regional)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Status)
@@ -58,24 +43,9 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DataCadastro)
+                @item.DataCadastro.ToShortDateString()
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataContratacao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Matricula)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cargo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Setor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Regional)
-            </td>
-            <td>
+            <td class="status">
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
@@ -89,8 +59,15 @@
                 " - ", item.Endereco.Cidade.Estado.Nome)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id })
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        Opções <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>@Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn-warning" })</li>
+                        <li>@Html.ActionLink("Detalhes", "Details", new { id = item.Id }, new { @class = "btn-default" })</li>
+                    </ul>
+                </div>
             </td>
         </tr>
     }

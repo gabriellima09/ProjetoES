@@ -1,23 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ProjetoES.DAO
 {
-    interface IDAO
+    public interface IDAO<T>
     {
-        void Salvar();
-
-        void Inserir();
-
-        void Consultar();
-
-        void ConsultarPorId(int id);
-
-        void Alterar();
-
-
+        void Salvar(T entidade);
+        void Inserir(T entidade);
+        IList<T> Consultar();
+        T ConsultarPorId(int id);
+        void Alterar(T entidade);
     }
 }

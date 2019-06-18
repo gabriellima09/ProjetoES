@@ -11,13 +11,13 @@ namespace ProjetoES.DAO
     {
         private DbContext door;
 
-        public int Salvar(Endereco endereco)
+        public int Salvar(Endereco entidade)
         {
             var Query = "";
 
             Query += "INSERT INTO endereco (logradouro, numero, cidade, estado) ";
 
-            Query += string.Format("VALUES ('{0}','{1}','{2}','{3}');", endereco.Logradouro, endereco.Numero, endereco.Cidade.Nome, endereco.Cidade.Estado.Nome);
+            Query += string.Format("VALUES ('{0}','{1}','{2}','{3}');", entidade.Logradouro, entidade.Numero, entidade.Cidade.Nome, entidade.Cidade.Estado.Nome);
 
             var Query_busca = "SELECT MAX(id) as id FROM endereco;";
 
@@ -38,16 +38,16 @@ namespace ProjetoES.DAO
             }
         }
 
-        public int Alterar(Endereco endereco)
+        public int Alterar(Endereco entidade)
         {
             var Query = "";
 
             Query += "UPDATE endereco SET";
-            Query += string.Format(" logradouro = '{0}', ", endereco.Logradouro);
-            Query += string.Format(" numero = '{0}', ", endereco.Numero);
-            Query += string.Format(" cidade = '{0}', ", endereco.Cidade.Nome);
-            Query += string.Format(" estado = '{0}' ", endereco.Cidade.Estado.Nome);
-            Query += string.Format(" WHERE id = '{0}' ", endereco.Id);
+            Query += string.Format(" logradouro = '{0}', ", entidade.Logradouro);
+            Query += string.Format(" numero = '{0}', ", entidade.Numero);
+            Query += string.Format(" cidade = '{0}', ", entidade.Cidade.Nome);
+            Query += string.Format(" estado = '{0}' ", entidade.Cidade.Estado.Nome);
+            Query += string.Format(" WHERE id = '{0}' ", entidade.Id);
 
             using (door = new DbContext())
             {
@@ -57,7 +57,7 @@ namespace ProjetoES.DAO
             return 0;
         }
 
-        public List<Endereco> Consultar()
+        public IList<Endereco> Consultar()
         {
             var Query = "SELECT * FROM endereco;";
 
@@ -88,7 +88,7 @@ namespace ProjetoES.DAO
             return enderecos;
         }
 
-        public Endereco ListaPorId(int id)
+        public Endereco ConsultarPorId(int id)
         {
             var Query = string.Format("SELECT * FROM endereco WHERE id_funcionario = {0}", id);
 

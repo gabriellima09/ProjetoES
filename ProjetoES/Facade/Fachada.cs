@@ -1,70 +1,84 @@
 ﻿using ProjetoES.DAO;
 using ProjetoES.Models;
+using ProjetoES.Strategy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace ProjetoES.Facade
 {
-    public class Fachada
+    public class Fachada : IFachada<Funcionario>
     {
-        public static void Cadastrar(Funcionario funcionario)
+        private Dictionary<string, List<IStrategy>> regra_validacao = new Dictionary<string, List<IStrategy>>();
+
+        public Fachada()
         {
-            if (funcionario.Validar())
+            List<IStrategy> lista_validacao = new List<IStrategy>
             {
-                var enderecoDao = new EnderecoDAO();
-                funcionario.IdEndereco = enderecoDao.Salvar(funcionario.Endereco);
+                new ValidarCpf(),
+                new ValidarData(),
+                new ValidarEmail(),
+                new ValidarFuncionario()
+            };
 
-                funcionario.DataCadastro = DateTime.Now;
-                funcionario.Status = 1;
-
-                var funcionarioDao = new FuncionarioDAO();
-                funcionarioDao.Salvar(funcionario);
-            }
-            else
-            {
-                throw new Exception("Ocorreu um erro ao tentar cadastrar o funcionário. Os dados do funcionário não são válidos ...");
-            }
+            regra_validacao.Add("funcionario", lista_validacao);
         }
 
-        public static void AtivarFuncionario(int id)
+        public void Cadastrar(Funcionario entidade)
         {
-            var funcionarioDAO = new FuncionarioDAO();
+            List<IStrategy> lista_objetos_validacao = regra_validacao["funcionario"];
+
+            for(int i = 0; i < lista_objetos_validacao.Count; i++)
+            {
+                lista_objetos_validacao[i].Processar(entidade);
+            }
+
+            EnderecoDAO enderecoDao = new EnderecoDAO();
+            entidade.IdEndereco = enderecoDao.Salvar(entidade.Endereco);
+
+            entidade.DataCadastro = DateTime.Now;
+            entidade.Status = 1;
+
+            FuncionarioDAO funcionarioDao = new FuncionarioDAO();
+            funcionarioDao.Salvar(entidade);
+        }
+
+        public void AtivarFuncionario(int id)
+        {
+            FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
             funcionarioDAO.AtivarFuncionario(id);
         }
 
-        public static void InativarFuncionario(int id)
+        public void InativarFuncionario(int id)
         {
-            var funcionarioDAO = new FuncionarioDAO();
+            FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
             funcionarioDAO.InativarFuncionario(id);
         }
 
-        public static void Alterar(Funcionario funcionario)
+        public void Alterar(Funcionario entidade)
         {
-            if (funcionario.Validar())
-            {
-                var enderecoDao = new EnderecoDAO();
-                enderecoDao.Alterar(funcionario.Endereco);
+            List<IStrategy> lista_objetos_validacao = regra_validacao["funcionario"];
 
-                var funcionarioDao = new FuncionarioDAO();
-                funcionarioDao.Salvar(funcionario);
-            }
-            else
+            for (int i = 0; i < lista_objetos_validacao.Count; i++)
             {
-                throw new Exception("Ocorreu um erro ao tentar cadastrar o funcionário. Os dados do funcionário não são válidos ...");
+                lista_objetos_validacao[i].Processar(entidade);
             }
+
+            EnderecoDAO enderecoDao = new EnderecoDAO();
+            enderecoDao.Alterar(entidade.Endereco);
+
+            FuncionarioDAO funcionarioDao = new FuncionarioDAO();
+            funcionarioDao.Salvar(entidade);
         }
 
-        public static List<Funcionario> Consultar()
+        public IList<Funcionario> Consultar()
         {
-            return new FuncionarioDAO().Consultar();
+            return new FuncionarioDAO().Consultar().ToList();
         }
 
-        public static Funcionario ConsultarPorId(int id)
+        public Funcionario ConsultarPorId(int id)
         {
             return new FuncionarioDAO().ConsultarPorId(id);
         }
-
     }
 }

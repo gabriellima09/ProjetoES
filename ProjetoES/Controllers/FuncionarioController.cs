@@ -1,9 +1,6 @@
-﻿using ProjetoES.Facade;
+﻿using ProjetoES.Command;
 using ProjetoES.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ProjetoES.Controllers
@@ -17,7 +14,7 @@ namespace ProjetoES.Controllers
 
         public ActionResult PvFuncionarios()
         {
-            return PartialView(Fachada.Consultar());
+            return PartialView(new ConsultarCommand().Executar());
         }
 
         public ActionResult Create()
@@ -30,18 +27,20 @@ namespace ProjetoES.Controllers
         {
             try
             {
-                Fachada.Cadastrar(funcionario);
+                new SalvarCommand().Executar(funcionario);
 
                 return View("Index");
-            }catch(Exception error) {
+            }
+            catch (Exception error)
+            {
                 return View("Error");
             }
-            
+
         }
 
         public ActionResult Edit(int id)
         {
-            return View(Fachada.ConsultarPorId(id));
+            return View(new ConsultarCommand().Executar(id));
         }
 
         [HttpPost]
@@ -49,7 +48,7 @@ namespace ProjetoES.Controllers
         {
             try
             {
-                Fachada.Alterar(funcionario);
+                new AlterarCommand().Executar(funcionario);
 
                 return View("Index");
             }
@@ -63,7 +62,7 @@ namespace ProjetoES.Controllers
         {
             try
             {
-                return View(Fachada.ConsultarPorId(id));
+                return View(new ConsultarCommand().Executar(id));
             }
             catch (Exception)
             {
@@ -75,14 +74,7 @@ namespace ProjetoES.Controllers
         {
             try
             {
-                if (status == 1)
-                {
-                    Fachada.InativarFuncionario(id);
-                }
-                else
-                {
-                    Fachada.AtivarFuncionario(id);
-                }
+                new TrocarStatusCommand().Executar(id, status);
 
                 return RedirectToAction("Details", new { id });
             }
