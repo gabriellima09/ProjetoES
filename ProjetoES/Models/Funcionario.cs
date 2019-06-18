@@ -50,6 +50,7 @@ namespace ProjetoES.Models
         public bool Validar()
         {
             return Validador.ValidarPropriedadeVazia(Nome)
+                && Validador.ValidarCPFNulo(Cpf)
                 && Validador.ValidarCPF(Cpf)
                 && Validador.ValidarEmail(Email)
                 && Validador.ValidarData(DataContratacao)
