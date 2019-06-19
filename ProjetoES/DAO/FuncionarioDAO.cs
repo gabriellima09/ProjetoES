@@ -14,7 +14,7 @@ namespace ProjetoES.DAO
         {
             var Query = "";
 
-            Query += "INSERT INTO funcionario (nome, cpf, dataContratacao, matricula, cargo, setor, regional, email, status, codigo, dataCadastro, id_endereco) ";
+            Query += "INSERT INTO funcionario (nome, cpf, matricula, cargo, setor, regional, email, status, codigo, id_endereco)";
 
             Query += string.Format("VALUES ('{0}','{1}', CONVERT(date, '{2}'),'{3}','{4}','{5}','{6}','{7}','{8}','{9}',CONVERT(date, '{10}'), '{11}');", funcionario.Nome, funcionario.Cpf, funcionario.DataContratacao, funcionario.Matricula, funcionario.Cargo,
                 funcionario.Setor, funcionario.Regional, funcionario.Email, funcionario.Status, funcionario.CodigoFuncionario, funcionario.DataCadastro, funcionario.IdEndereco);
@@ -47,12 +47,40 @@ namespace ProjetoES.DAO
             }
         }
 
-        public void AtivarFuncionario(int id)
+        private int buscarStatus(int id)
         {
+            int status = 0;
+            string QueryInativacao = "";
+
+            string Query = "SELECT status FROM funcionario WHERE id = " + id;
+            using (door = new DbContext())
+            {
+                using (var reader = door.ExecutaComandoQueryComRetorno(Query))
+                {
+                    while (reader.Read())
+                    {
+                        status = Convert.ToInt32(Convert.ToString(reader["status"]));
+                    }
+                }
+            }
+            return status;
+        }
+
+        public void TrocarStatus(int id)
+        {
+            var status = buscarStatus(id);
+
             var Query = "";
 
-            Query += "UPDATE funcionario SET status = 1";
-            Query += string.Format(" WHERE id = '{0}' ", id);
+
+            if (status == 1)
+            {
+                Query += "UPDATE funcionario SET status = 0";
+            }
+            else
+            {
+                Query += "UPDATE funcionario SET status = 1";
+            }
 
             using (door = new DbContext())
             {
@@ -60,19 +88,7 @@ namespace ProjetoES.DAO
             }
         }
 
-        public void InativarFuncionario(int id)
-        {
-            var Query = "";
-
-            Query += "UPDATE funcionario SET status = 0";
-            Query += string.Format(" WHERE id = '{0}' ", id);
-
-            using (door = new DbContext())
-            {
-                door.ExecutaComandoQuery(Query);
-            }
-        }
-
+       
         public void Salvar(Funcionario funcionario)
         {
             if (funcionario.Id > 0)

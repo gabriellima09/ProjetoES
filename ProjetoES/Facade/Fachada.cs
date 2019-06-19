@@ -41,16 +41,11 @@ namespace ProjetoES.Facade
             funcionarioDao.Salvar(funcionario);
         }
 
-        public void AtivarFuncionario(int id)
+        public void TrocarStatus(int id)
         {
             var funcionarioDAO = new FuncionarioDAO();
-            funcionarioDAO.AtivarFuncionario(id);
-        }
 
-        public void InativarFuncionario(int id)
-        {
-            var funcionarioDAO = new FuncionarioDAO();
-            funcionarioDAO.InativarFuncionario(id);
+            funcionarioDAO.TrocarStatus(id);
         }
 
         public void Alterar(Funcionario funcionario)

@@ -10,7 +10,7 @@ namespace ProjetoES.Models
     {
         public bool processar(Funcionario funcionario)
         {
-            return Validador.ValidarPropriedadeVazia(funcionario.Nome) 
+            return Validador.ValidarPropriedadeVazia(funcionario.Nome)
                 && Validador.ValidarPropriedadeVazia(funcionario.Matricula)
                 && Validador.ValidarPropriedadeVazia(funcionario.Cargo)
                 && Validador.ValidarPropriedadeVazia(funcionario.Setor)

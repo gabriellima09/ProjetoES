@@ -13,19 +13,11 @@ namespace ProjetoES.Models
 
         }
 
-        public void executar(int id, int status)
+        public void executar(int id)
         {
             Fachada fachada = new Fachada();
 
-            if (status == 1)
-            {
-                fachada.InativarFuncionario(id);
-            }
-            else
-            {
-                fachada.AtivarFuncionario(id);
-            }
-
+            fachada.TrocarStatus(id);
         }
 
     }

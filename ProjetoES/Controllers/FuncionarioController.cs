@@ -31,15 +31,13 @@ namespace ProjetoES.Controllers
         [HttpPost]
         public ActionResult Create(Funcionario funcionario)
         {
-            try
-            {
-                SalvarCommand salvar = new SalvarCommand();
+            var dataContratacao = funcionario.DataContratacao;
+            var dataCadastro = funcionario.DataCadastro;
+
+            SalvarCommand salvar = new SalvarCommand();
                 salvar.executar(funcionario);
 
                 return View("Index");
-            }catch(Exception error) {
-                return View("Error");
-            }
             
         }
 
@@ -82,18 +80,14 @@ namespace ProjetoES.Controllers
 
         public ActionResult TrocarStatus(int id, int status)
         {
-            try
-            {
+            
                 TrocarStatusCommand trocarStatus = new TrocarStatusCommand();
 
-                trocarStatus.executar(id, status);
+                trocarStatus.executar(id);
 
                 return RedirectToAction("Details", new { id });
-            }
-            catch (Exception)
-            {
-                return View("Error");
-            }
+            
+
         }
     }
 }
