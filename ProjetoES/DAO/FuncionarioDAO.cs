@@ -14,9 +14,9 @@ namespace ProjetoES.DAO
         {
             var Query = "";
 
-            Query += "INSERT INTO funcionario (nome, cpf, matricula, cargo, setor, regional, email, status, codigo, id_endereco)";
+            Query += "INSERT INTO funcionario (nome, cpf, dataContratacao, matricula, cargo, setor, regional, email, status, codigo, dataCadastro, id_endereco)";
 
-            Query += string.Format("VALUES ('{0}','{1}', CONVERT(date, '{2}'),'{3}','{4}','{5}','{6}','{7}','{8}','{9}',CONVERT(date, '{10}'), '{11}');", funcionario.Nome, funcionario.Cpf, funcionario.DataContratacao, funcionario.Matricula, funcionario.Cargo,
+            Query += string.Format(" VALUES ('{0}','{1}', CONVERT(date, '{2}', 103),'{3}','{4}','{5}','{6}','{7}','{8}','{9}',CONVERT(date, '{10}', 103), '{11}');", funcionario.Nome, funcionario.Cpf, funcionario.DataContratacao, funcionario.Matricula, funcionario.Cargo,
                 funcionario.Setor, funcionario.Regional, funcionario.Email, funcionario.Status, funcionario.CodigoFuncionario, funcionario.DataCadastro, funcionario.IdEndereco);
 
             using (door = new DbContext())
@@ -47,12 +47,12 @@ namespace ProjetoES.DAO
             }
         }
 
-        private int buscarStatus(int id)
+        private int BuscarStatus(int id)
         {
             int status = 0;
-            string QueryInativacao = "";
 
             string Query = "SELECT status FROM funcionario WHERE id = " + id;
+
             using (door = new DbContext())
             {
                 using (var reader = door.ExecutaComandoQueryComRetorno(Query))
@@ -68,7 +68,7 @@ namespace ProjetoES.DAO
 
         public void TrocarStatus(int id)
         {
-            var status = buscarStatus(id);
+            var status = BuscarStatus(id);
 
             var Query = "";
 

@@ -1,21 +1,17 @@
-﻿using ProjetoES.Util;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using ProjetoES.Strategy;
+using ProjetoES.Util;
 
 namespace ProjetoES.Models
 {
-    public class ValidarPropriedadeVazia : IStrategy
+    public class ValidarEndereco : IStrategy
     {
-        public bool processar(Funcionario funcionario)
+        public bool Processar(Funcionario funcionario)
         {
-            return Validador.ValidarPropriedadeVazia(funcionario.Nome)
-                && Validador.ValidarPropriedadeVazia(funcionario.Matricula)
-                && Validador.ValidarPropriedadeVazia(funcionario.Cargo)
-                && Validador.ValidarPropriedadeVazia(funcionario.Setor)
-                && Validador.ValidarPropriedadeVazia(funcionario.Regional)
-                && funcionario.Endereco.Validar();
+            return Validador.ValidarPropriedadeVazia(funcionario.Endereco.Complemento)
+               && Validador.ValidarPropriedadeVazia(funcionario.Endereco.Logradouro)
+               && Validador.ValidarPropriedadeVazia(funcionario.Endereco.Numero)
+               && Validador.ValidarPropriedadeVazia(funcionario.Endereco.Cidade.Nome)
+               && Validador.ValidarPropriedadeVazia(funcionario.Endereco.Cidade.Estado.Nome);
         }
     }
 }

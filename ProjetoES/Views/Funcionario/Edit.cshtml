@@ -43,7 +43,8 @@
         <div class="form-group">
             @Html.Label("Data de Contratação", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DataContratacao, new { htmlAttributes = new { @class = "form-control" } })
+                <input class="form-control" type="date" id="DataContratacao" name="DataContratacao" value="@Model.DataContratacao.ToString("yyyy-MM-dd")" />
+                @*@Html.EditorFor(model => model.DataContratacao, new { htmlAttributes = new { @class = "form-control", @type = "date", @value = Model.DataContratacao.ToString("yyyy-MM-dd") } })*@
                 @Html.ValidationMessageFor(model => model.DataContratacao, "", new { @class = "text-danger" })
             </div>
         </div>

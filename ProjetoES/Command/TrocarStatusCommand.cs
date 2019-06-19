@@ -4,16 +4,9 @@ namespace ProjetoES.Command
 {
     public class TrocarStatusCommand : AbstractCommand
     {
-        public void Executar(int id, int status)
+        public void Executar(int id)
         {
-            if (status == 1)
-            {
-                Fachada.InativarFuncionario(id);
-            }
-            else
-            {
-                Fachada.AtivarFuncionario(id);
-            }
+            Fachada.TrocarStatus(id);
         }
     }
 }

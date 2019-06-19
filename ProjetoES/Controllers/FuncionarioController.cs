@@ -74,7 +74,7 @@ namespace ProjetoES.Controllers
         {
             try
             {
-                new TrocarStatusCommand().Executar(id, status);
+                new TrocarStatusCommand().Executar(id);
 
                 return RedirectToAction("Details", new { id });
             }
