@@ -18,7 +18,7 @@ namespace ProjetoES
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            DatabaseConfig.Initialize(true);
+            DatabaseConfig.Initialize();
         }
     }
 }
