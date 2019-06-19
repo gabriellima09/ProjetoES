@@ -4,6 +4,7 @@ using ProjetoES.Strategy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Mvc;
 
 namespace ProjetoES.Facade
 {
@@ -18,7 +19,8 @@ namespace ProjetoES.Facade
                 new ValidarCpf(),
                 new ValidarData(),
                 new ValidarEmail(),
-                new ValidarFuncionario()
+                new ValidarFuncionario(),
+                new ValidarEndereco()
             };
 
             regra_validacao.Add("funcionario", lista_validacao);
@@ -28,10 +30,15 @@ namespace ProjetoES.Facade
         {
             List<IStrategy> lista_objetos_validacao = regra_validacao["funcionario"];
 
+            var flgValidaOk = true;
+
             for(int i = 0; i < lista_objetos_validacao.Count; i++)
             {
-                lista_objetos_validacao[i].Processar(entidade);
+                if (!lista_objetos_validacao[i].Processar(entidade));
             }
+
+            if (!flgValidaOk)
+                return;
 
             EnderecoDAO enderecoDao = new EnderecoDAO();
             entidade.IdEndereco = enderecoDao.Salvar(entidade.Endereco);

@@ -18,13 +18,5 @@ namespace ProjetoES.Models
 
         public string Complemento { get; set; }
 
-
-        public bool Validar()
-        {
-            return Validador.ValidarPropriedadeVazia(Logradouro)
-                && Validador.ValidarPropriedadeVazia(Numero)
-                && Cidade.Validar();
-        }
-
     }
 }

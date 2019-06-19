@@ -9,51 +9,49 @@ namespace ProjetoES.Util
 {
     public static class Validador
     {
-        public static bool ValidarCPFNulo(this string cpf)
-        {
-            return Regex.IsMatch(cpf, @"^\d{3}\.\d{3}\.\d{3}-\d{2}$") && !string.IsNullOrWhiteSpace(cpf);
-        }
-        
         public static bool ValidarCPF(this string cpf)
         {
-            var multiplicador1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
-            var multiplicador2 = new int[10] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
-            string tempCpf;
-            string digito;
-            int soma;
-            int resto;
-
-            cpf = cpf.Trim();
-            cpf = cpf.Replace(".", "").Replace("-", "");
-
-            if (cpf.Length != 11)
+            if (string.IsNullOrWhiteSpace(cpf))
+            {
                 return false;
+            }
+            else
+            {
+                var multiplicador1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+                var multiplicador2 = new int[10] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
 
-            tempCpf = cpf.Substring(0, 9);
-            soma = 0;
+                cpf = cpf.Trim().Replace(".", "").Replace("-", "");
+                if (cpf.Length != 11)
+                    return false;
 
-            for (int i = 0; i < 9; i++)
-                soma += int.Parse(tempCpf[i].ToString()) * multiplicador1[i];
+                for (int j = 0; j < 10; j++)
+                    if (j.ToString().PadLeft(11, char.Parse(j.ToString())) == cpf)
+                        return false;
 
-            resto = soma % 11;
-            resto = resto < 2 ? 0 : 11 - resto;
+                var tempCpf = cpf.Substring(0, 9);
+                var soma = 0;
 
-            digito = resto.ToString();
+                for (int i = 0; i < 9; i++)
+                    soma += int.Parse(tempCpf[i].ToString()) * multiplicador1[i];
 
-            tempCpf = tempCpf + digito;
+                var resto = soma % 11;
+                resto = resto < 2 ? 0 : 11 - resto;
 
-            soma = 0;
-            for (int i = 0; i < 10; i++)
-                soma += int.Parse(tempCpf[i].ToString()) * multiplicador2[i];
+                var digito = resto.ToString();
+                tempCpf = tempCpf + digito;
+                soma = 0;
+                for (int i = 0; i < 10; i++)
+                    soma += int.Parse(tempCpf[i].ToString()) * multiplicador2[i];
 
-            resto = soma % 11;
+                resto = soma % 11;
+                resto = resto < 2 ? 0 : 11 - resto;
 
-            resto = resto < 2 ? 0 : 11 - resto;
+                digito = digito + resto.ToString();
 
-            digito = digito + resto.ToString();
-
-            return cpf.EndsWith(digito);
+                return cpf.EndsWith(digito);
+            }
         }
+       
 
         public static bool ValidarData(this DateTime data)
         {
@@ -62,7 +60,9 @@ namespace ProjetoES.Util
 
         public static bool ValidarEmail(this string email)
         {
-            return Regex.IsMatch(email, @"^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$");
+            return Regex.IsMatch(email,
+                @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
+                @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-0-9a-z]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$");
         }
 
         public static bool ValidarPropriedadeVazia(this string propriedade)
