@@ -56,7 +56,7 @@ namespace ProjetoES.App_Start
             {
                 StringBuilder sb = new StringBuilder();
 
-                sb.Append("IF OBJECT_ID('" + DbUtil.DatabaseName + ".funcionario') IS NULL");
+                sb.Append("IF (SELECT COUNT(name) FROM " + DbUtil.DatabaseName + ".sys.tables where name = 'endereco') = 0");
                 sb.Append(" BEGIN");
                 sb.Append(" CREATE TABLE endereco(");
                 sb.Append(" id INTEGER IDENTITY(1,1) PRIMARY KEY,");
@@ -69,7 +69,7 @@ namespace ProjetoES.App_Start
 
                 sb.Append("\n");
 
-                sb.Append("IF OBJECT_ID('" + DbUtil.DatabaseName + ".funcionario') IS NULL");
+                sb.Append("IF (SELECT COUNT(name) FROM " + DbUtil.DatabaseName + ".sys.tables where name = 'funcionario') = 0");
                 sb.Append(" BEGIN");
                 sb.Append(" CREATE TABLE funcionario(");
                 sb.Append(" id INTEGER IDENTITY(1,1) PRIMARY KEY,");
@@ -97,7 +97,7 @@ namespace ProjetoES.App_Start
                     }
                 }
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
                 throw;
             }
